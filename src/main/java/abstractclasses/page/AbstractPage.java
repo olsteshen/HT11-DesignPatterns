@@ -1,9 +1,21 @@
 package abstractclasses.page;
 
-public abstract class AbstractPage {
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.support.PageFactory;
 
+public abstract class AbstractPage {
+    protected WebDriver driver;
     private String pageUrl;
     private String pageUrlPattern;
+
+    public AbstractPage(WebDriver driver) {
+        this.driver = driver;
+        PageFactory.initElements(driver, this);
+    }
+
+    public WebDriver getDriver() {
+        return this.driver;
+    }
 
     public void setPageUrl(String pageUrl) {
         this.pageUrl = pageUrl;
