@@ -11,14 +11,14 @@ public class NavigationBarFragment extends AbstractFragment {
     public WebElement navigationBar;
 
     @FindBy(xpath = "//li[@class='mob-nav-account']/a[contains(@href,'/login')]")
-    public WebElement signInCTA;
+    public WebElement signInLabel;
 
     public NavigationBarFragment(WebDriver driver){
         super(driver);
     }
 
-    public void signInCTAClick(){
-        signInCTA.click();
+    public void signInLabelClick(){
+        signInLabel.click();
     }
 
     public boolean checkNavigationBarDisplayed(){

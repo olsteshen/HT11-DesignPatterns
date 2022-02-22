@@ -2,36 +2,38 @@ package runner;
 
 import desktop.pages.AccountPage;
 import desktop.pages.HomePage;
+import driver.SingletonDriver;
 import org.junit.Assert;
 import org.junit.Test;
-import org.junit.platform.suite.api.SelectPackages;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.AfterEach;
+import org.openqa.selenium.WebDriver;
 
-//@RunWith(JUnitPlatform.class)
-@SelectPackages("put your packages here")
 
-public class TestRunner extends DriverManager {
+public class TestRunner{
     HomePage homePageObject;
     AccountPage accPageObject;
+    WebDriver driver = SingletonDriver.getInstance();
 
     @Test
     public void homePageSearch() {
-        driver.get("https://www.bookdepository.com");
         homePageObject = new HomePage(driver);
         homePageObject.enterSearchTerm();
         homePageObject.searchButtonClick();
-        Assert.assertTrue(homePageObject.checkSearchResultsPresent());
+        Assert.assertTrue("No Search results present", homePageObject.checkSearchResultsPresent());
     }
 
     @Test
-    public void signInToAccount() {
-        driver.get("https://www.bookdepository.com");
+    public void loginToAccount() {
         homePageObject = new HomePage(driver);
-        homePageObject.navBarClick();
-        accPageObject = new AccountPage(driver);
+        accPageObject = homePageObject.navBarClick();
         accPageObject.checkLoginTitleDisplayed();
-        accPageObject.loginToAccount("test@valid.com", "qwerty");
-        Assert.assertTrue(accPageObject.checkURL());
+        accPageObject.fillInSignInFields("test@valid.com", "qwerty");
+        Assert.assertTrue("Incorrect URL for Sign In page", accPageObject.checkURL());
+    }
+
+    @AfterEach
+    public void tearDown() {
+        SingletonDriver.getInstance().quit();
     }
 }
 

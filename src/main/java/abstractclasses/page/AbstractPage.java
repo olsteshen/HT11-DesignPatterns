@@ -13,10 +13,6 @@ public abstract class AbstractPage {
         PageFactory.initElements(driver, this);
     }
 
-    public WebDriver getDriver() {
-        return this.driver;
-    }
-
     public void setPageUrl(String pageUrl) {
         this.pageUrl = pageUrl;
     }
