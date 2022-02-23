@@ -3,9 +3,9 @@ package runner;
 import desktop.pages.AccountPage;
 import desktop.pages.HomePage;
 import driver.SingletonDriver;
+import org.junit.AfterClass;
 import org.junit.Assert;
 import org.junit.Test;
-import org.junit.jupiter.api.AfterEach;
 import org.openqa.selenium.WebDriver;
 
 
@@ -31,8 +31,8 @@ public class TestRunner{
         Assert.assertTrue("Incorrect URL for Sign In page", accPageObject.checkURL());
     }
 
-    @AfterEach
-    public void tearDown() {
+    @AfterClass
+    public static void tearDown() {
         SingletonDriver.getInstance().quit();
     }
 }
