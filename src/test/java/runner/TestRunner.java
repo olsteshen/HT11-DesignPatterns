@@ -2,38 +2,40 @@ package runner;
 
 import desktop.pages.AccountPage;
 import desktop.pages.HomePage;
+import desktop.pages.SearchResultsPage;
 import driver.SingletonDriver;
-import org.junit.AfterClass;
 import org.junit.Assert;
-import org.junit.Test;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.openqa.selenium.WebDriver;
 
-
-public class TestRunner{
+public class TestRunner {
     HomePage homePageObject;
     AccountPage accPageObject;
+    SearchResultsPage searchResultsPageObject;
     WebDriver driver = SingletonDriver.getInstance();
+
+    @AfterAll
+    public static void tearDown() {
+        SingletonDriver.getInstance().quit();
+    }
 
     @Test
     public void homePageSearch() {
         homePageObject = new HomePage(driver);
-        homePageObject.enterSearchTerm();
-        homePageObject.searchButtonClick();
-        Assert.assertTrue("No Search results present", homePageObject.checkSearchResultsPresent());
+        homePageObject.enterSearchTerm("Thinking");
+        searchResultsPageObject = homePageObject.searchButtonClick();
+        Assertions.assertTrue(searchResultsPageObject.isSearchResultsPresent());
     }
 
     @Test
     public void loginToAccount() {
         homePageObject = new HomePage(driver);
         accPageObject = homePageObject.navBarClick();
-        accPageObject.checkLoginTitleDisplayed();
+        accPageObject.IsLoginTitleDisplayed();
         accPageObject.fillInSignInFields("test@valid.com", "qwerty");
-        Assert.assertTrue("Incorrect URL for Sign In page", accPageObject.checkURL());
-    }
-
-    @AfterClass
-    public static void tearDown() {
-        SingletonDriver.getInstance().quit();
+        accPageObject.checkURL();
     }
 }
 

@@ -17,24 +17,19 @@ public class HomePage extends AbstractPage {
     private WebElement searchButton;
     @FindBy(xpath = "//div[@class='secondary-header']")
     private WebElement navigationCategories;
-    @FindBy(xpath = "//*[@class='book-item']")
-    private WebElement searchResults;
 
     public HomePage(WebDriver driver) {
         super(driver);
         SingletonDriver.getInstance().get(HOME_PAGE_URL);
     }
 
-    public void enterSearchTerm() {
-        searchBarInput.sendKeys("Thinking");
+    public void enterSearchTerm(String searchTerm) {
+        searchBarInput.sendKeys(searchTerm);
     }
 
-    public Boolean checkSearchResultsPresent() {
-        return searchResults.isDisplayed();
-    }
-
-    public void searchButtonClick() {
+    public SearchResultsPage searchButtonClick() {
         searchButton.click();
+        return new SearchResultsPage(driver);
     }
 
     public AccountPage navBarClick() {

@@ -3,6 +3,7 @@ package desktop.pages;
 import abstractclasses.page.AbstractPage;
 import desktop.fragments.NavigationBarFragment;
 import driver.SingletonDriver;
+import org.junit.jupiter.api.Assertions;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -26,8 +27,8 @@ public class AccountPage extends AbstractPage {
         SingletonDriver.getInstance();
     }
 
-    public boolean checkURL() {
-        return SingletonDriver.getInstance().getCurrentUrl().equals(SIGN_IN_PAGE_URL);
+    public void checkURL() {
+        Assertions.assertEquals(SingletonDriver.getInstance().getCurrentUrl(), SIGN_IN_PAGE_URL);
     }
 
     public void enterEmail(String email) {
@@ -43,7 +44,7 @@ public class AccountPage extends AbstractPage {
         submitButton.click();
     }
 
-    public Boolean checkLoginTitleDisplayed() {
+    public Boolean IsLoginTitleDisplayed() {
         driver.switchTo().frame(0);
         return titleText.isDisplayed();
     }
