@@ -2,36 +2,39 @@ package runner;
 
 import desktop.pages.AccountPage;
 import desktop.pages.HomePage;
-import org.junit.Assert;
-import org.junit.Test;
-import org.junit.platform.suite.api.SelectPackages;
-import org.junit.runner.RunWith;
+import desktop.pages.SearchResultsPage;
+import driver.SingletonDriver;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
+import org.openqa.selenium.WebDriver;
 
-//@RunWith(JUnitPlatform.class)
-@SelectPackages("put your packages here")
-
-public class TestRunner extends DriverManager {
+public class TestRunner {
     HomePage homePageObject;
     AccountPage accPageObject;
+    SearchResultsPage searchResultsPageObject;
+    WebDriver driver = SingletonDriver.getInstance();
 
-    @Test
-    public void homePageSearch() {
-        driver.get("https://www.bookdepository.com");
-        homePageObject = new HomePage(driver);
-        homePageObject.enterSearchTerm();
-        homePageObject.searchButtonClick();
-        Assert.assertTrue(homePageObject.checkSearchResultsPresent());
+    @AfterAll
+    public static void tearDown() {
+        SingletonDriver.getInstance().quit();
     }
 
     @Test
-    public void signInToAccount() {
-        driver.get("https://www.bookdepository.com");
+    public void homePageSearch() {
         homePageObject = new HomePage(driver);
-        homePageObject.navBarClick();
-        accPageObject = new AccountPage(driver);
-        accPageObject.checkLoginTitleDisplayed();
-        accPageObject.loginToAccount("test@valid.com", "qwerty");
-        Assert.assertTrue(accPageObject.checkURL());
+        homePageObject.enterSearchTerm("Thinking");
+        searchResultsPageObject = homePageObject.searchButtonClick();
+        Assertions.assertTrue(searchResultsPageObject.isSearchResultsPresent());
+    }
+
+    @Test
+    public void loginToAccount() {
+        homePageObject = new HomePage(driver);
+        accPageObject = homePageObject.navBarClick();
+        accPageObject.isLoginTitleDisplayed();
+        accPageObject.fillInSignInFields("test@valid.com", "qwerty");
+        accPageObject.checkURL();
     }
 }
 
