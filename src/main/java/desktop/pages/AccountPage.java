@@ -28,7 +28,7 @@ public class AccountPage extends AbstractPage {
     }
 
     public void checkURL() {
-        Assertions.assertEquals(SingletonDriver.getInstance().getCurrentUrl(), SIGN_IN_PAGE_URL);
+        Assertions.assertEquals(SIGN_IN_PAGE_URL, SingletonDriver.getInstance().getCurrentUrl(), "Incorrect page url" );
     }
 
     public void enterEmail(String email) {
@@ -44,7 +44,7 @@ public class AccountPage extends AbstractPage {
         submitButton.click();
     }
 
-    public Boolean IsLoginTitleDisplayed() {
+    public Boolean isLoginTitleDisplayed() {
         driver.switchTo().frame(0);
         return titleText.isDisplayed();
     }

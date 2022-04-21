@@ -4,7 +4,6 @@ import desktop.pages.AccountPage;
 import desktop.pages.HomePage;
 import desktop.pages.SearchResultsPage;
 import driver.SingletonDriver;
-import org.junit.Assert;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
@@ -33,7 +32,7 @@ public class TestRunner {
     public void loginToAccount() {
         homePageObject = new HomePage(driver);
         accPageObject = homePageObject.navBarClick();
-        accPageObject.IsLoginTitleDisplayed();
+        accPageObject.isLoginTitleDisplayed();
         accPageObject.fillInSignInFields("test@valid.com", "qwerty");
         accPageObject.checkURL();
     }

@@ -2,7 +2,6 @@ package desktop.pages;
 
 import abstractclasses.page.AbstractPage;
 import driver.SingletonDriver;
-import org.junit.jupiter.api.Assertions;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
